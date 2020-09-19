@@ -9,9 +9,17 @@ import {
 
 import * as CartActions from '../../store/modules/cart/actions';
 import { Container, ProductTable, Total } from './styles';
+import { formatPrice } from '../../utils/format';
 
-function Cart({ cart, removeFromCart }) {
+function Cart({ cart, total, removeFromCart, updateAmount }) {
   // const dispatch = useDispatch();
+  function incrementAmount(product) {
+    updateAmount(product.id, product.amount + 1);
+  }
+
+  function decrementAmount(product) {
+    updateAmount(product.id, product.amount - 1);
+  }
 
   return (
     <Container>
@@ -37,17 +45,23 @@ function Cart({ cart, removeFromCart }) {
               </td>
               <td>
                 <div>
-                  <button type="button">
+                  <button
+                    type="button"
+                    onClick={() => decrementAmount(product)}
+                  >
                     <MdRemoveCircleOutline size={20} color="#00468c" />
                   </button>
                   <input type="number" readOnly value={product.amount} />
-                  <button type="button">
+                  <button
+                    type="button"
+                    onClick={() => incrementAmount(product)}
+                  >
                     <MdAddCircleOutline size={20} color="#00468c" />
                   </button>
                 </div>
               </td>
               <td>
-                <strong>R$259,80</strong>
+                <strong>{product.subtotal}</strong>
               </td>
               <td>
                 <button
@@ -70,7 +84,7 @@ function Cart({ cart, removeFromCart }) {
 
         <Total>
           <span>TOTAL</span>
-          <strong>R$567,93</strong>
+          <strong>{total}</strong>
         </Total>
       </footer>
     </Container>
@@ -78,7 +92,15 @@ function Cart({ cart, removeFromCart }) {
 }
 
 const mapStateToProps = (state) => ({
-  cart: state.cart,
+  cart: state.cart.map((product) => ({
+    ...product,
+    subtotal: formatPrice(product.price * product.amount),
+  })),
+  total: formatPrice(
+    state.cart.reduce((total, product) => {
+      return total + product.price * product.amount;
+    }, 0)
+  ), // para o total começar com 0
 });
 
 const mapDispatchToProps = (dispatch) =>
