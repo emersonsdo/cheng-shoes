@@ -25,8 +25,8 @@ function Home({ amount }) {
     loadProducts();
   }, []);
 
-  function handleCartChange(product) {
-    dispatch(CartActions.addToCart(product));
+  function handleCartChange(id) {
+    dispatch(CartActions.addToCartRequest(id));
     // Em teoria seria assim com o bindActionCreators
     // addToCart()
   }
@@ -39,7 +39,7 @@ function Home({ amount }) {
           <strong>{product.title}</strong>
           <span>{product.formattedPrice}</span>
 
-          <button type="button" onClick={() => handleCartChange(product)}>
+          <button type="button" onClick={() => handleCartChange(product.id)}>
             <div>
               <MdAddShoppingCart size={16} color="#FFF" /> {''}
               {amount[product.id] || 0}
