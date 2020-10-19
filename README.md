@@ -4,4 +4,4 @@ Esse projeto foi desenvolvido durante um bootcamp, e é baseado [nesse outro aqu
 que é utilizado para exemplificar conceitos do padrão Flux. Aqui são utilizados o 'react-redux',
 'redux-saga', 'immer' e algumas outras bibliotecas que auxiliam nessa tarefa.
 
-Não deixe de conferir o projeto que fiz [com o Redux Toolkit](LINKAQUI) para comparar com o esse projeto.
+Não deixe de conferir o projeto que fiz [com o Redux Toolkit](https://github.com/emersonsdo/chengshoes-reduxtoolkit) para comparar com o esse projeto.
